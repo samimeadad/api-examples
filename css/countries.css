@@ -1,0 +1,22 @@
+.country{
+    background-color:beige;
+    border:2px solid tomato;
+    margin: 20px;
+    padding: 20px;
+    border-radius: 20px;
+    text-align: center;
+}
+
+#countries-cotainer{
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+}
+
+#information{
+    background-color:beige;
+    border:2px solid tomato;
+    margin: 20px;
+    padding: 20px;
+    border-radius: 20px;
+    text-align: center;
+}
