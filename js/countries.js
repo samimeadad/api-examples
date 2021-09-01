@@ -7,10 +7,6 @@ loadCountries();
 
 
 const displayCountries = countries => {
-
-    /* for ( const country of countries ) {
-        console.log( country );
-    } */
     const countrySeciton = document.getElementById( 'countries-cotainer' );
     countries.forEach( country => {
         const div = document.createElement( 'div' );

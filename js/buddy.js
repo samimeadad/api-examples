@@ -4,6 +4,8 @@ const loadBuddies = () => {
         .then( data => displayBuddies( data ) );
 }
 
+loadBuddies();
+
 const displayBuddies = data => {
     const buddies = data.results;
     const buddiesContainer = document.getElementById( 'buddies' );
@@ -23,4 +25,3 @@ const displayBuddies = data => {
     }
 
 }
-loadBuddies();

@@ -1,27 +1,48 @@
 document.getElementById( 'api-error' ).style.display = 'none';
-const searchFood = () => {
-    const searchField = document.getElementById( 'search-field' );
-    const searchText = searchField.value;
-    searchField.value = "";
-    const url = `https://www.themealdb.com/api/json/v1/1/search.php?s=${ searchText }`;
-    if ( searchText == '' ) {
-        displayError( 'NO EMPTY SEARCH!!!' );
-    }
-    else {
-        loadData( url );
-    }
-}
-
-const loadData = url => {
-    fetch( url )
-        .then( res => res.json() )
-        .then( data => displaySearchResult( data.meals ) )
-        .catch( error => displayApiError( error ) );
-}
 
 const displayApiError = () => {
     clearResult();
     document.getElementById( 'api-error' ).style.display = 'block';
+}
+
+const loadMealDetail = mealId => {
+    const url = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${ mealId }`;
+    fetch( url )
+        .then( res => res.json() )
+        .then( data => displayMealDetail( data.meals[ 0 ] ) );
+
+}
+
+const displayMealDetail = meal => {
+    const mealDetails = document.getElementById( 'meal-details' );
+    mealDetails.textContent = '';
+    const div = document.createElement( 'div' );
+    div.classList.add( 'card' );
+    div.innerHTML = `
+        <img src="${ meal.strMealThumb }" class="card-img-top img-fluid" alt="...">
+        <div class="card-body">
+            <h5 class="card-title">${ meal.strMeal }</h5>
+            <p class="card-text">${ meal.strInstructions.slice( 0, 150 ) }</p >
+        <a href="${ meal.strYoutube }" class="btn btn-primary">Go somewhere</a>
+        </div >
+    `;
+    mealDetails.appendChild( div );
+}
+
+const clearResult = () => {
+    document.getElementById( 'api-error' ).style.display = 'none';
+    const searchResult = document.getElementById( 'search-result' );
+    searchResult.textContent = '';
+    const errorMessageDiv = document.getElementById( 'error-message' );
+    errorMessageDiv.textContent = '';
+}
+
+const displayError = ( error ) => {
+    const errorMessageDiv = document.getElementById( 'error-message' );
+    clearResult();
+    const h2 = document.createElement( 'h2' );
+    h2.innerText = error;
+    errorMessageDiv.appendChild( h2 );
 }
 
 const displaySearchResult = ( meals ) => {
@@ -49,47 +70,25 @@ const displaySearchResult = ( meals ) => {
     }
 }
 
-const displayError = ( error ) => {
-    const errorMessageDiv = document.getElementById( 'error-message' );
-    clearResult();
-    const h2 = document.createElement( 'h2' );
-    h2.innerText = error;
-    errorMessageDiv.appendChild( h2 );
-}
-
-const loadMealDetail = mealId => {
-    const url = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${ mealId }`;
+const loadData = url => {
     fetch( url )
         .then( res => res.json() )
-        .then( data => displayMealDetail( data.meals[ 0 ] ) );
-
+        .then( data => displaySearchResult( data.meals ) )
+        .catch( error => displayApiError( error ) );
 }
 
-const displayMealDetail = meal => {
-    // console.log( meal );
-    const mealDetails = document.getElementById( 'meal-details' );
-    mealDetails.textContent = '';
-    const div = document.createElement( 'div' );
-    div.classList.add( 'card' );
-    div.innerHTML = `
-        <img src="${ meal.strMealThumb }" class="card-img-top img-fluid" alt="...">
-        <div class="card-body">
-            <h5 class="card-title">${ meal.strMeal }</h5>
-            <p class="card-text">${ meal.strInstructions.slice( 0, 150 ) }</p >
-        <a href="${ meal.strYoutube }" class="btn btn-primary">Go somewhere</a>
-        </div >
-    `;
-    mealDetails.appendChild( div );
+const searchFood = () => {
+    const searchField = document.getElementById( 'search-field' );
+    const searchText = searchField.value;
+    searchField.value = "";
+    const url = `https://www.themealdb.com/api/json/v1/1/search.php?s=${ searchText }`;
+    if ( searchText == '' ) {
+        displayError( 'NO EMPTY SEARCH!!!' );
+    }
+    else {
+        loadData( url );
+    }
 }
-
-const clearResult = () => {
-    document.getElementById( 'api-error' ).style.display = 'none';
-    const searchResult = document.getElementById( 'search-result' );
-    searchResult.textContent = '';
-    const errorMessageDiv = document.getElementById( 'error-message' );
-    errorMessageDiv.textContent = '';
-}
-
 
 document.getElementById( 'button-search' ).addEventListener( 'click', function () {
     searchFood();

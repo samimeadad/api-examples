@@ -39,18 +39,17 @@ const displaySearchResult = ( meals ) => {
     }
     else {
         meals.forEach( meal => {
-            // console.log( meal );
             const colDiv = document.createElement( 'div' );
             colDiv.classList.add( 'col' );
             colDiv.innerHTML = `
-        <div onclick="loadMealDetail(${ meal.idMeal })" class="card h-100">
-            <img src="${ meal.strMealThumb }" class="card-img-top img-fluid" alt="...">
-            <div class="card-body">
-                <h5 class="card-title">${ meal.strMeal }</h5>
-                <p class="card-text">${ meal.strInstructions.slice( 0, 200 ) }</p>
-            </div>
-        </div>
-        `;
+		        <div onclick="loadMealDetail(${ meal.idMeal })" class="card h-100">
+		            <img src="${ meal.strMealThumb }" class="card-img-top img-fluid" alt="...">
+		            <div class="card-body">
+		                <h5 class="card-title">${ meal.strMeal }</h5>
+		                <p class="card-text">${ meal.strInstructions.slice( 0, 200 ) }</p>
+		            </div>
+		        </div>
+        	`;
             searchResult.appendChild( colDiv );
         } );
     }
