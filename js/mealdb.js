@@ -1,3 +1,12 @@
+const searchButton = document.getElementById( "button-search" );
+const inputField = document.getElementById( "search-field" );
+
+inputField.addEventListener( "keyup", function ( event ) {
+    event.preventDefault();
+    if ( event.key === 'Enter' )
+        searchButton.click();
+} );
+
 document.getElementById( 'api-error' ).style.display = 'none';
 
 const displayApiError = () => {
